@@ -2,10 +2,11 @@ using UnityEngine;
 using Unity.Mathematics;
 
 
+
 public class MoveForward : MonoBehaviour
 {
-
     public float speed = 1.0f;
+    public PlayerController player;
     private Vector3 direction;
     private bool isLaunched = false;// es lanzada
 
@@ -23,8 +24,9 @@ public class MoveForward : MonoBehaviour
             transform.Translate(direction * Time.deltaTime * speed);
             float positionLimit = 0.1f;
 
-            if (math.abs(transform.position.y) > positionLimit)
+            if (math.abs(transform.position.y) != 0.1f)
             {
+                //mantiene la posicion en y que es el limite
                 transform.position = new Vector3(transform.position.x, positionLimit * math.sign(transform.position.y), transform.position.z);
             }
 
@@ -33,17 +35,27 @@ public class MoveForward : MonoBehaviour
     }
     public void Launch()
     {
-        direction = Vector3.right;
-        isLaunched = true;
+        if (isLaunched == false)
+        {
+            float randomZ = 0.3f;//UnityEngine.Random.Range(-0.7f, 0.7f);
+
+            direction = new Vector3(1, 0, randomZ).normalized;
+            isLaunched = true;
+        }
     }
     void OnCollisionEnter(Collision collision)
     {
-        direction = Vector3.Reflect(direction, collision.contacts[0].normal);// la normal es el vector unitario perpendicular a la superficie
-                                                                             // Define la nueva dirección despues del golpe
-        if (collision.gameObject.CompareTag("Block"))
+        direction = Vector3.Reflect(direction, collision.contacts[0].normal).normalized;// la normal es el vector unitario perpendicular a la superficie
+                                                                                        // Define la nueva dirección despues del golpe
+        float minZ = 0.3f;
+        if (Mathf.Abs(direction.z) < minZ)
         {
-            Destroy(collision.gameObject);
+            direction.z = Mathf.Sign(direction.z) * minZ;
+            direction = direction.normalized;
         }
-
+    }
+    public void addPoints(int points)
+    {
+        player.addPoints(points);
     }
 }

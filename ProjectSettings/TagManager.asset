@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Block
   - ParedInferior
+  - ball
   layers:
   - Default
   - TransparentFX
