@@ -7,6 +7,7 @@ public class MoveForward : MonoBehaviour
 {
     public float speed = 1.0f;
     public PlayerController player;
+    
     private Vector3 direction;
     private bool isLaunched = false;// es lanzada
     public bool IsLaunched => isLaunched;

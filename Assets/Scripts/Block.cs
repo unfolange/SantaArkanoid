@@ -5,6 +5,7 @@ public class Block : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public int life = 1;
+    public bool isGift = false;
     public Material[] changingMaterials;
     private int materialIndex = 0;
 
@@ -45,6 +46,10 @@ public class Block : MonoBehaviour
             int collisionPoints;
             if (life <= 0)
             {
+                if (isGift && PowerUpManager.Instance != null)
+                {
+                    PowerUpManager.Instance.SpawnRandomPowerUp(transform.position);
+                }
                 Destroy(gameObject);
                 collisionPoints = 100;
             }
@@ -60,5 +65,4 @@ public class Block : MonoBehaviour
             collision.gameObject.GetComponent<MoveForward>().addPoints(collisionPoints);
         }
     }
-
 }
