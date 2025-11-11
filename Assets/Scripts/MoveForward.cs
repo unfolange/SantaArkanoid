@@ -9,7 +9,7 @@ public class MoveForward : MonoBehaviour
     public PlayerController player;
     private Vector3 direction;
     private bool isLaunched = false;// es lanzada
-
+    public bool IsLaunched => isLaunched;
 
     void Start()
     {
@@ -28,6 +28,12 @@ public class MoveForward : MonoBehaviour
             {
                 //mantiene la posicion en y que es el limite
                 transform.position = new Vector3(transform.position.x, positionLimit * math.sign(transform.position.y), transform.position.z);
+            }
+            float deathLineX = -5.5f; // mueve esto según tu cámara / layout
+            if (transform.position.x < deathLineX)
+            {
+                isLaunched = false;
+                player.LoseLifeAndResetBall();
             }
 
 
@@ -57,5 +63,10 @@ public class MoveForward : MonoBehaviour
     public void addPoints(int points)
     {
         player.addPoints(points);
+    }
+    public void ResetBallState()
+    {
+        isLaunched = false;
+        direction = Vector3.zero;
     }
 }
