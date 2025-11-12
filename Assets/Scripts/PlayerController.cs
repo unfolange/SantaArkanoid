@@ -6,6 +6,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class PlayerController : MonoBehaviour
 {
     public float horizontalInput;
@@ -23,9 +25,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private List<GameObject> ListaCorazones;
     [SerializeField] private Sprite corazonesDesactivado;
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
         ballScript = ball.GetComponent<MoveForward>();
         originalBallSpeed = ballScript.speed;
         originalScale = transform.localScale;
@@ -81,6 +85,8 @@ public class PlayerController : MonoBehaviour
         if (lives <= 0)
         {
             Debug.Log("GAME OVER");
+            SceneManager.LoadScene("GameOver");
+
             // Aquí puedes:
             // - Desactivar controles,
             // - Mostrar UI,

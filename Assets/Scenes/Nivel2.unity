@@ -1658,7 +1658,7 @@ SpriteRenderer:
   m_Size: {x: 22.72, y: 6.4010935}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &545097722
@@ -2335,7 +2335,7 @@ SpriteRenderer:
   m_Size: {x: 22.72, y: 6.4010935}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &791024375
@@ -3694,7 +3694,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!1001 &1241051989
 PrefabInstance:
@@ -5439,7 +5439,7 @@ SpriteRenderer:
   m_Size: {x: 22.72, y: 6.4010935}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &2122919918
@@ -5781,6 +5781,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1917670008}
+    - target: {fileID: 8695461809811516024, guid: 78085bfb494f7ff4ea3995371aafa9f3, type: 3}
+      propertyPath: contenedorBloques
+      value: 
+      objectReference: {fileID: 813556394}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
