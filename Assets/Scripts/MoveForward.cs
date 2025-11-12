@@ -62,10 +62,16 @@ public class MoveForward : MonoBehaviour
     {
         direction = Vector3.Reflect(direction, collision.contacts[0].normal).normalized;// la normal es el vector unitario perpendicular a la superficie
                                                                                         // Define la nueva dirección despues del golpe
-        float minZ = 0.5f;
-        if (Mathf.Abs(direction.z) < minZ)
+        Debug.Log("direccion de colision: " + direction);
+        float minGrado = 0.4f;
+        if (Mathf.Abs(direction.x) < minGrado)
         {
-            direction.z = Mathf.Sign(direction.z) * minZ;
+            direction.x = Mathf.Sign(direction.x) * minGrado;
+            direction = direction.normalized;
+        }
+        if (Mathf.Abs(direction.z) < minGrado)
+        {
+            direction.z = Mathf.Sign(direction.z) * minGrado;
             direction = direction.normalized;
         }
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("pared"))
