@@ -3,7 +3,7 @@ using UnityEngine;
 public class PowerUpManager : MonoBehaviour
 {
     public static PowerUpManager Instance { get; private set; }
-    public GameObject[] powerUpPrefabs; // arrastras aquí tus 5 prefabs
+    public GameObject[] powerUpPrefabs;
 
     private void Awake()
     {

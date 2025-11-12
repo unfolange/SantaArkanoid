@@ -90,12 +90,6 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("GAME OVER");
             SceneManager.LoadScene("GameOver");
-
-            // Aquí puedes:
-            // - Desactivar controles,
-            // - Mostrar UI,
-            // - Recargar escena:
-            // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             return;
         }
 
