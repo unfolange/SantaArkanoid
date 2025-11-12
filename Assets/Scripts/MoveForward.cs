@@ -9,11 +9,12 @@ public class MoveForward : MonoBehaviour
     public float speed = 1.0f;
     public PlayerController player;
     public GameObject contenedorBloques;
-
+    public AudioClip rebotaSound;
     private Vector3 direction;
     private bool fueLanzada = false;// es lanzada
     public bool FueLanzada => fueLanzada;
     private Dictionary<string, string> scenes;
+    private AudioSource pelotaAudio;
 
     void Start()
     {
@@ -21,6 +22,7 @@ public class MoveForward : MonoBehaviour
         scenes = new Dictionary<string, string>();
         scenes.Add("Nivel1", "Nivel2");
         scenes.Add("Nivel2", "Ganaste");
+        pelotaAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -65,6 +67,10 @@ public class MoveForward : MonoBehaviour
         {
             direction.z = Mathf.Sign(direction.z) * minZ;
             direction = direction.normalized;
+        }
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("pared"))
+        {
+            pelotaAudio.PlayOneShot(rebotaSound);
         }
     }
     public void AdicionarPuntos(int puntos)

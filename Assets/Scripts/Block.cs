@@ -7,9 +7,12 @@ public class Block : MonoBehaviour
     public int life = 1;
     public bool isGift = false;
     public Material[] changingMaterials;
+    public AudioClip giftAudio;
     private int materialIndex = 0;
 
     private Renderer renderer;
+
+    private AudioSource bloqueAudio;
 
     void Start()
     {
@@ -19,6 +22,8 @@ public class Block : MonoBehaviour
         {
             SetMaterialByIndex(materialIndex);
         }
+        bloqueAudio = GetComponent<AudioSource>();
+
     }
 
     private void SetMaterialByIndex(int index)
@@ -39,8 +44,12 @@ public class Block : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+
         if (collision.gameObject.CompareTag("ball"))
         {
+            if (giftAudio != null)
+                AudioSource.PlayClipAtPoint(giftAudio, Camera.main.transform.position, 1f);
+
             life--;
 
             int PuntosPorColision;
