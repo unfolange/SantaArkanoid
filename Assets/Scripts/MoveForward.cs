@@ -1,20 +1,26 @@
 using UnityEngine;
 using Unity.Mathematics;
-
-
+using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
 
 public class MoveForward : MonoBehaviour
 {
     public float speed = 1.0f;
     public PlayerController player;
-    
+    public GameObject contenedorBloques;
+
     private Vector3 direction;
     private bool isLaunched = false;// es lanzada
     public bool IsLaunched => isLaunched;
+    private Dictionary<string, string> scenes;
 
     void Start()
     {
         direction = Vector3.zero;// la pelota se queda quieta por defecto
+        scenes = new Dictionary<string, string>();
+        scenes.Add("Nivel1", "Nivel2");
+        scenes.Add("Nivel2", "Ganaste");
     }
 
     // Update is called once per frame
@@ -69,5 +75,23 @@ public class MoveForward : MonoBehaviour
     {
         isLaunched = false;
         direction = Vector3.zero;
+    }
+    public void verifyBlockCount()
+    {
+        int totalBlocks = 0;
+        Transform[] childArray = contenedorBloques.GetComponentsInChildren<Transform>();
+
+        foreach (Transform child in childArray)
+        {
+            totalBlocks = totalBlocks + child.transform.childCount;
+        }
+
+        if (totalBlocks == 7)
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            Debug.Log("Ganaste!");
+            string nextScene = scenes[scene.name];
+            SceneManager.LoadScene(nextScene);
+        }
     }
 }

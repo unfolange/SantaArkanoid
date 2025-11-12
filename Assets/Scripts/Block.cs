@@ -50,6 +50,7 @@ public class Block : MonoBehaviour
                 {
                     PowerUpManager.Instance.SpawnRandomPowerUp(transform.position);
                 }
+                collision.gameObject.GetComponent<MoveForward>().verifyBlockCount();
                 Destroy(gameObject);
                 collisionPoints = 100;
             }

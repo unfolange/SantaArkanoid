@@ -5,7 +5,7 @@ using UnityEngine.InputSystem.Controls;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public float horizontalInput;
@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private float originalBallSpeed;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
+    [SerializeField] private List<GameObject> ListaCorazones;
+    [SerializeField] private Sprite corazonesDesactivado;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -72,6 +74,7 @@ public class PlayerController : MonoBehaviour
     public void LoseLifeAndResetBall()
     {
         lives--;
+        RestarCorazones(lives);
         UpdateLives();
         Debug.Log("Vida perdida. Vidas restantes: " + lives);
 
@@ -147,6 +150,11 @@ public class PlayerController : MonoBehaviour
     {
         if (livesText != null)
             livesText.text = "Lives: " + lives;
+    }
+    void RestarCorazones(int indice)
+    {
+        Image imagenCorazon = ListaCorazones[indice].GetComponent<Image>();
+        imagenCorazon.sprite = corazonesDesactivado;
     }
 
 
