@@ -16,4 +16,8 @@ public class GameOver : MonoBehaviour
     {
         SceneManager.LoadScene("Nivel1");
     }
+    public void OnClickNivel2()
+    {
+        SceneManager.LoadScene("Nivel2");
+    }
 }

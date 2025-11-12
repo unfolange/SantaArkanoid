@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PowerUp : MonoBehaviour
 {
-    public enum PowerType { Expand, Shrink, SpeedUp, SlowDown, SlowBallDown, Die }
+    public enum PowerType { Expandir, Achicar, AumentarVelocidad, DisminuirVelocidad, RalentizarPelota, Muerte }
     public PowerType type;
     public float speed = 3f;
     public float duration = 5f;
@@ -32,7 +32,7 @@ public class PowerUp : MonoBehaviour
         PlayerController player = other.GetComponent<PlayerController>();
         if (player != null)
         {
-            player.ApplyPowerUp(type, duration);
+            player.AplicarPowerUp(type, duration);
         }
 
         Destroy(gameObject);

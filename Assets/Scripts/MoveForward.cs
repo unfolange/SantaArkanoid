@@ -11,8 +11,8 @@ public class MoveForward : MonoBehaviour
     public GameObject contenedorBloques;
 
     private Vector3 direction;
-    private bool isLaunched = false;// es lanzada
-    public bool IsLaunched => isLaunched;
+    private bool fueLanzada = false;// es lanzada
+    public bool FueLanzada => fueLanzada;
     private Dictionary<string, string> scenes;
 
     void Start()
@@ -26,7 +26,7 @@ public class MoveForward : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isLaunched)
+        if (fueLanzada)
         {
             transform.Translate(direction * Time.deltaTime * speed);
             float positionLimit = 0.1f;
@@ -39,57 +39,56 @@ public class MoveForward : MonoBehaviour
             float deathLineX = -5.5f; // mueve esto según tu cámara / layout
             if (transform.position.x < deathLineX)
             {
-                isLaunched = false;
-                player.LoseLifeAndResetBall();
+                fueLanzada = false;
+                player.DescontarVida();
             }
 
 
         }
     }
-    public void Launch()
+    public void Lanzar()
     {
-        if (isLaunched == false)
+        if (fueLanzada == false)
         {
             float randomZ = 0.3f;//UnityEngine.Random.Range(-0.7f, 0.7f);
 
             direction = new Vector3(1, 0, randomZ).normalized;
-            isLaunched = true;
+            fueLanzada = true;
         }
     }
     void OnCollisionEnter(Collision collision)
     {
         direction = Vector3.Reflect(direction, collision.contacts[0].normal).normalized;// la normal es el vector unitario perpendicular a la superficie
                                                                                         // Define la nueva dirección despues del golpe
-        float minZ = 0.3f;
+        float minZ = 0.5f;
         if (Mathf.Abs(direction.z) < minZ)
         {
             direction.z = Mathf.Sign(direction.z) * minZ;
             direction = direction.normalized;
         }
     }
-    public void addPoints(int points)
+    public void AdicionarPuntos(int puntos)
     {
-        player.addPoints(points);
+        player.AdicionarPuntos(puntos);
     }
-    public void ResetBallState()
+    public void ReiniciarEstadoPelota()
     {
-        isLaunched = false;
+        fueLanzada = false;
         direction = Vector3.zero;
     }
-    public void verifyBlockCount()
+    public void VerificarBloquesExistentes()
     {
-        int totalBlocks = 0;
+        int cantidadBloques = 0;
         Transform[] childArray = contenedorBloques.GetComponentsInChildren<Transform>();
 
         foreach (Transform child in childArray)
         {
-            totalBlocks = totalBlocks + child.transform.childCount;
+            cantidadBloques = cantidadBloques + child.transform.childCount;
         }
 
-        if (totalBlocks == 7)
+        if (cantidadBloques == 7)
         {
             Scene scene = SceneManager.GetActiveScene();
-            Debug.Log("Ganaste!");
             string nextScene = scenes[scene.name];
             SceneManager.LoadScene(nextScene);
         }

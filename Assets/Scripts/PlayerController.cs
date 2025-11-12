@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public float horizontalInput;
     public float speed = 10.0f;
     public GameObject ball;
-    private int points = 0;
+    private int puntos = 0;
     private MoveForward ballScript;
     public int lives = 3;
 
@@ -34,52 +34,56 @@ public class PlayerController : MonoBehaviour
         originalBallSpeed = ballScript.speed;
         originalScale = transform.localScale;
         originalSpeed = speed;
-        ResetBallPosition();
-
-        UpdateScore();
+        ReiniciarPosicionPelota();
+        ActualizarPuntaje();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        float positionLimit = 2.5f;
+        float limiteMovimientoIzq = -1.5f;
+        float limiteMovimientoDer = 2.5f;
 
-        if (math.abs(transform.position.z) > positionLimit)
+        if (transform.position.z < limiteMovimientoIzq)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, positionLimit * math.sign(transform.position.z));
+            transform.position = new Vector3(transform.position.x, transform.position.y, limiteMovimientoIzq);
+        }
+        if (transform.position.z > limiteMovimientoDer)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, limiteMovimientoDer);
         }
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector3.back * horizontalInput * Time.deltaTime * speed);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            ballScript.Launch(); // hay llamo a launch para que lance la pelota
+            ballScript.Lanzar(); // hay llamo a launch para que lance la pelota
         }
-        if (!ballScript.IsLaunched)
+        if (!ballScript.FueLanzada)
         {
-            ResetBallPosition();
+            ReiniciarPosicionPelota();
         }
     }
 
-    public int addPoints(int newPoints)
+    public int AdicionarPuntos(int nuevosPuntos)
     {
-        points += newPoints;
-        UpdateScore();
-        Debug.Log("points: " + points.ToString());
-        return points;
+        puntos += nuevosPuntos;
+        ActualizarPuntaje();
+        Debug.Log("puntos: " + puntos.ToString());
+        return puntos;
     }
 
-    void ResetBallPosition()
+    void ReiniciarPosicionPelota()
     {
         Vector3 offset = new Vector3(0.4f, 0, 0);
         ball.transform.position = transform.position + offset;
     }
-    public void LoseLifeAndResetBall()
+    public void DescontarVida()
     {
         lives--;
         RestarCorazones(lives);
-        UpdateLives();
+        ActualizarVidas();
         Debug.Log("Vida perdida. Vidas restantes: " + lives);
 
         if (lives <= 0)
@@ -96,13 +100,13 @@ public class PlayerController : MonoBehaviour
         }
 
         // Reiniciar estado de la pelota
-        ballScript.ResetBallState();
+        ballScript.ReiniciarEstadoPelota();
 
         // Reposicionar la pelota encima de la barra
-        ResetBallPosition();
+        ReiniciarPosicionPelota();
     }
 
-    public void ApplyPowerUp(PowerUp.PowerType type, float duration)
+    public void AplicarPowerUp(PowerUp.PowerType type, float duration)
     {
         StopAllCoroutines(); // simple: un efecto a la vez
         StartCoroutine(PowerUpRoutine(type, duration));
@@ -113,28 +117,28 @@ public class PlayerController : MonoBehaviour
         // aplicar efecto
         switch (type)
         {
-            case PowerUp.PowerType.Expand:
+            case PowerUp.PowerType.Expandir:
                 transform.localScale = originalScale + new Vector3(0, 0, 0.7f);
                 break;
 
-            case PowerUp.PowerType.Shrink:
+            case PowerUp.PowerType.Achicar:
                 transform.localScale = originalScale + new Vector3(0, 0, -0.8f);
                 break;
 
-            case PowerUp.PowerType.SpeedUp:
+            case PowerUp.PowerType.AumentarVelocidad:
                 speed = originalSpeed + 5f;
                 break;
 
-            case PowerUp.PowerType.SlowDown:
+            case PowerUp.PowerType.DisminuirVelocidad:
                 speed = Mathf.Max(2f, originalSpeed - 8f);
                 break;
 
-            case PowerUp.PowerType.SlowBallDown:
+            case PowerUp.PowerType.RalentizarPelota:
                 ballScript.speed = Mathf.Max(2f, originalBallSpeed - 4f);
                 break;
 
-            case PowerUp.PowerType.Die:
-                LoseLifeAndResetBall();
+            case PowerUp.PowerType.Muerte:
+                DescontarVida();
                 break;
         }
 
@@ -146,16 +150,16 @@ public class PlayerController : MonoBehaviour
         ballScript.speed = originalBallSpeed;
     }
 
-    void UpdateScore()
+    void ActualizarPuntaje()
     {
         if (scoreText != null)
-            scoreText.text = "Score: " + points;
+            scoreText.text = "Puntaje: " + puntos;
     }
 
-    void UpdateLives()
+    void ActualizarVidas()
     {
         if (livesText != null)
-            livesText.text = "Lives: " + lives;
+            livesText.text = "Vidas: " + lives;
     }
     void RestarCorazones(int indice)
     {

@@ -3,8 +3,6 @@ using UnityEngine;
 public class PowerUpManager : MonoBehaviour
 {
     public static PowerUpManager Instance { get; private set; }
-
-    [Header("Lista de prefabs de PowerUps/PowerDowns")]
     public GameObject[] powerUpPrefabs; // arrastras aquí tus 5 prefabs
 
     private void Awake()
@@ -17,7 +15,7 @@ public class PowerUpManager : MonoBehaviour
         Instance = this;
     }
 
-    public void SpawnRandomPowerUp(Vector3 position)
+    public void DibujarPowerUpAleatorio(Vector3 position)
     {
         if (powerUpPrefabs == null || powerUpPrefabs.Length == 0)
         {

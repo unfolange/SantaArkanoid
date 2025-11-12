@@ -43,16 +43,16 @@ public class Block : MonoBehaviour
         {
             life--;
 
-            int collisionPoints;
+            int PuntosPorColision;
             if (life <= 0)
             {
                 if (isGift && PowerUpManager.Instance != null)
                 {
-                    PowerUpManager.Instance.SpawnRandomPowerUp(transform.position);
+                    PowerUpManager.Instance.DibujarPowerUpAleatorio(transform.position);
                 }
-                collision.gameObject.GetComponent<MoveForward>().verifyBlockCount();
+                collision.gameObject.GetComponent<MoveForward>().VerificarBloquesExistentes();
                 Destroy(gameObject);
-                collisionPoints = 100;
+                PuntosPorColision = 100;
             }
             else
             {
@@ -61,9 +61,9 @@ public class Block : MonoBehaviour
                     materialIndex++;
                     SetMaterialByIndex(materialIndex);
                 }
-                collisionPoints = 50;
+                PuntosPorColision = 50;
             }
-            collision.gameObject.GetComponent<MoveForward>().addPoints(collisionPoints);
+            collision.gameObject.GetComponent<MoveForward>().AdicionarPuntos(PuntosPorColision);
         }
     }
 }
