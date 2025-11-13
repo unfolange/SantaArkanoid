@@ -20,4 +20,8 @@ public class GameOver : MonoBehaviour
     {
         SceneManager.LoadScene("Nivel2");
     }
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

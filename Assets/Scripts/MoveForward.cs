@@ -3,6 +3,7 @@ using Unity.Mathematics;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class MoveForward : MonoBehaviour
 {
@@ -104,5 +105,6 @@ public class MoveForward : MonoBehaviour
             string nextScene = scenes[scene.name];
             SceneManager.LoadScene(nextScene);
         }
+
     }
 }

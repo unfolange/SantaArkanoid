@@ -22,6 +22,7 @@ public class PowerUpManager : MonoBehaviour
             Debug.LogWarning("No hay powerUps asignados en PowerUpManager.");
             return;
         }
+        position.y = 0;
 
         int index = Random.Range(0, powerUpPrefabs.Length);
         Instantiate(powerUpPrefabs[index], position, Quaternion.identity);
